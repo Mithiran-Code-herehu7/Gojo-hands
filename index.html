@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Gojo Cursed Techniques AR | 無下限呪術</title>
+  <meta name="description" content="Browser-based real-time AR web application inspired by Satoru Gojo's Cursed Techniques from Jujutsu Kaisen. Control Lapse: Blue, Reversal: Red, and Hollow Purple using hand gestures.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Outfit:wght@300;400;600;800&family=Zen+Antique&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+
+  <!-- CDN Dependencies: Three.js and MediaPipe Hands -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="app-container" class="app-container">
+    <!-- Mirrored Webcam Video Layer -->
+    <video id="webcam-video" class="webcam-layer" autoplay playsinline muted></video>
+
+    <!-- WebGL Overlay Layer -->
+    <canvas id="webgl-canvas" class="webgl-layer"></canvas>
+
+    <!-- Developer / Debug Landmark Canvas -->
+    <canvas id="debug-canvas" class="debug-layer"></canvas>
+
+    <!-- Initial Landing / Start Experience Screen -->
+    <div id="start-screen" class="start-screen">
+      <div class="start-content">
+        <div class="domain-seal">領域展開 • 無量空処</div>
+        <h1 class="main-title">CURSED TECHNIQUE AR</h1>
+        <p class="subtitle">Use your hands to control Satoru Gojo's cursed energy</p>
+
+        <!-- Visual Technique Guide Cards -->
+        <div class="technique-cards">
+          <div class="tech-card blue-card">
+            <div class="card-glow"></div>
+            <div class="card-icon">🔵</div>
+            <div class="card-kanji">術式順転「蒼」</div>
+            <h3>LAPSE: BLUE</h3>
+            <p class="card-desc">Open palm & extended fingers. Creates an attractive gravitational singularity that warps surrounding space.</p>
+            <span class="card-gesture">GESTURE: OPEN PALM</span>
+          </div>
+
+          <div class="tech-card red-card">
+            <div class="card-glow"></div>
+            <div class="card-icon">🔴</div>
+            <div class="card-kanji">術式反転「赫」</div>
+            <h3>REVERSAL: RED</h3>
+            <p class="card-desc">Point your index finger forward. Produces an unstable, blinding repulsive shockwave of divergent energy.</p>
+            <span class="card-gesture">GESTURE: POINT INDEX</span>
+          </div>
+
+          <div class="tech-card purple-card">
+            <div class="card-glow"></div>
+            <div class="card-icon">🟣</div>
+            <div class="card-kanji">虚式「茈」</div>
+            <h3>HOLLOW PURPLE</h3>
+            <p class="card-desc">Bring Blue (Left) and Red (Right) together. Collide the forces to synthesize an imaginary mass, aim, and thrust forward!</p>
+            <span class="card-gesture">GESTURE: MERGE HANDS & THRUST</span>
+          </div>
+        </div>
+
+        <button id="start-btn" class="start-button">
+          <span class="btn-energy"></span>
+          <span class="btn-text">START EXPERIENCE</span>
+        </button>
+
+        <div class="camera-notice">
+          <span>📷 Requires webcam access for real-time 3D hand tracking. Zero recording or backend storage.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active In-Game Minimal AR HUD -->
+    <div id="hud" class="hud hidden">
+      <!-- Top Center Technique Status Banner -->
+      <div class="hud-top">
+        <div id="technique-badge" class="technique-badge badge-neutral">
+          <div id="technique-kanji" class="badge-kanji">無下限</div>
+          <div id="technique-text" class="badge-title">NEUTRAL</div>
+        </div>
+        <div id="hint-text" class="hint-bar">Raise your hand in front of the camera to begin</div>
+      </div>
+
+      <!-- Top Right Controls Toolbar -->
+      <div class="hud-toolbar">
+        <button id="mute-btn" class="hud-btn" title="Toggle Sound [M]">
+          <span class="icon">🔊</span> AUDIO ON
+        </button>
+        <button id="debug-btn" class="hud-btn" title="Toggle Debug Diagnostics [D]">
+          <span class="icon">⚡</span> DEBUG
+        </button>
+        <span id="fps-counter" class="fps-tag">60 FPS</span>
+      </div>
+
+      <!-- Live Diagnostic Panel (Toggled via 'D' or Debug Button) -->
+      <div id="debug-panel" class="debug-panel hidden"></div>
+    </div>
+
+    <!-- Camera Permission / Error Modal -->
+    <div id="error-modal" class="modal-backdrop hidden">
+      <div class="modal-box">
+        <div class="modal-icon">⚠️</div>
+        <h2 class="modal-title">CAMERA ACCESS NEEDED</h2>
+        <p id="error-message" class="modal-text">Camera permission was denied. Please allow webcam access in your browser settings to track your hand gestures.</p>
+        <button id="error-close" class="modal-btn">CLOSE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main ES Module Script -->
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

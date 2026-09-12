@@ -1,0 +1,14 @@
+{
+  "name": "gojo-cursed-techniques-ar",
+  "version": "1.0.0",
+  "description": "Browser-based real-time AR web application inspired by Satoru Gojo's Cursed Techniques from Jujutsu Kaisen",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "start": "vite --host",
+    "serve": "npx serve -l 3000 ."
+  },
+  "devDependencies": {
+    "vite": "^5.4.2"
+  }
+}

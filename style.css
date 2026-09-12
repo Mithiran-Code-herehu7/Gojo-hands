@@ -1,0 +1,633 @@
+/* ===================================================================
+   GOJO CURSED TECHNIQUES AR — STYLESHEET
+   Aesthetics: Infinite Void / Futuristic Jujutsu Kaisen Cyberpunk
+   =================================================================== */
+
+:root {
+  --bg-color: #04060d;
+  --panel-bg: rgba(8, 12, 24, 0.72);
+  --panel-border: rgba(0, 240, 255, 0.25);
+  
+  --cyan-blue: #00f0ff;
+  --deep-blue: #0066ff;
+  --crimson-red: #ff003c;
+  --flame-red: #ff3300;
+  --void-purple: #a824ff;
+  --bright-purple: #c840ff;
+  --white-hot: #ffffff;
+  
+  --font-display: 'Cinzel', serif;
+  --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-kanji: 'Zen Antique', serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-color);
+  font-family: var(--font-body);
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===================================================================
+   APP CONTAINER & AR VIEWPORT
+   =================================================================== */
+.app-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #000000;
+}
+
+/* Screen Shake Animation on Hollow Purple Launch */
+.screen-shake {
+  animation: violent-shake 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes violent-shake {
+  10%, 90% { transform: translate3d(-4px, -2px, 0) scale(1.01); }
+  20%, 80% { transform: translate3d(5px, 4px, 0) scale(1.02); }
+  30%, 50%, 70% { transform: translate3d(-7px, -5px, 0) scale(1.01); }
+  40%, 60% { transform: translate3d(7px, 5px, 0) scale(1.02); }
+  100% { transform: translate3d(0, 0, 0) scale(1.0); }
+}
+
+/* Mirrored AR Selfie Webcam Feed */
+.webcam-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1); /* Mirror camera feed horizontally */
+  z-index: 1;
+}
+
+/* WebGL Effects Layer (Transparent Canvas over Camera) */
+.webgl-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Debug Landmark Skeleton Layer */
+.debug-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 15;
+}
+
+/* ===================================================================
+   START SCREEN MODAL
+   =================================================================== */
+.start-screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, rgba(12, 18, 38, 0.88) 0%, rgba(4, 6, 13, 0.98) 100%);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  z-index: 100;
+  padding: 2rem;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.start-screen.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.start-content {
+  max-width: 960px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 1rem 0;
+  animation: startFadeIn 0.8s ease-out forwards;
+}
+
+@keyframes startFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.domain-seal {
+  font-family: var(--font-kanji);
+  font-size: 0.95rem;
+  letter-spacing: 0.3em;
+  color: var(--cyan-blue);
+  text-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  padding: 0.35rem 1.4rem;
+  border-radius: 999px;
+  background: rgba(0, 240, 255, 0.05);
+}
+
+.main-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.0rem, 4.5vw, 3.6rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  background: linear-gradient(135deg, #ffffff 20%, #a8d5ff 60%, var(--cyan-blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+  line-height: 1.1;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: rgba(220, 235, 255, 0.85);
+  max-width: 580px;
+}
+
+/* Technique Guide Cards */
+.technique-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  width: 100%;
+  margin: 0.2rem 0;
+}
+
+.tech-card {
+  position: relative;
+  background: var(--panel-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 1.3rem 1.1rem;
+  text-align: left;
+  overflow: hidden;
+  backdrop-filter: blur(15px);
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tech-card:hover {
+  transform: translateY(-6px);
+}
+
+.tech-card .card-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: currentColor;
+  opacity: 0.8;
+}
+
+.blue-card {
+  color: var(--cyan-blue);
+  border-color: rgba(0, 240, 255, 0.2);
+}
+.blue-card:hover {
+  border-color: var(--cyan-blue);
+  box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);
+}
+
+.red-card {
+  color: var(--crimson-red);
+  border-color: rgba(255, 0, 60, 0.2);
+}
+.red-card:hover {
+  border-color: var(--crimson-red);
+  box-shadow: 0 10px 30px rgba(255, 0, 60, 0.2);
+}
+
+.purple-card {
+  color: var(--bright-purple);
+  border-color: rgba(200, 64, 255, 0.25);
+}
+.purple-card:hover {
+  border-color: var(--bright-purple);
+  box-shadow: 0 10px 30px rgba(200, 64, 255, 0.25);
+}
+
+.card-icon {
+  font-size: 2.2rem;
+  margin-bottom: 0.6rem;
+}
+
+.card-kanji {
+  font-family: var(--font-kanji);
+  font-size: 0.95rem;
+  letter-spacing: 0.15em;
+  opacity: 0.85;
+  margin-bottom: 0.3rem;
+}
+
+.tech-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.6rem;
+}
+
+.card-desc {
+  font-size: 0.9rem;
+  color: rgba(200, 215, 235, 0.75);
+  line-height: 1.5;
+  margin-bottom: 1.2rem;
+  min-height: 4rem;
+}
+
+.card-gesture {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid currentColor;
+}
+
+/* Start Button */
+.start-button {
+  position: relative;
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(168, 36, 255, 0.25));
+  border: 1px solid rgba(0, 240, 255, 0.6);
+  border-radius: 999px;
+  padding: 1.1rem 3.4rem;
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.start-button:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 40px rgba(0, 240, 255, 0.6), 0 0 60px rgba(168, 36, 255, 0.4);
+  border-color: #ffffff;
+}
+
+.start-button:active {
+  transform: scale(0.98);
+}
+
+.btn-energy {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: energyShine 2.5s infinite;
+}
+
+@keyframes energyShine {
+  0% { left: -100%; }
+  50%, 100% { left: 100%; }
+}
+
+.camera-notice {
+  font-size: 0.85rem;
+  color: rgba(180, 200, 230, 0.6);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ===================================================================
+   ACTIVE AR HUD
+   =================================================================== */
+.hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.hud.hidden {
+  display: none;
+}
+
+/* Top Center Status Banner */
+.hud-top {
+  position: absolute;
+  top: 1.8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  pointer-events: auto;
+}
+
+.technique-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.55rem 2.2rem;
+  border-radius: 12px;
+  background: rgba(6, 10, 20, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.badge-kanji {
+  font-family: var(--font-kanji);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  opacity: 0.8;
+}
+
+.badge-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+/* Badge Glow States */
+.badge-neutral {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.badge-blue {
+  border-color: var(--cyan-blue);
+  color: var(--cyan-blue);
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.5), inset 0 0 15px rgba(0, 240, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.badge-red {
+  border-color: var(--crimson-red);
+  color: var(--crimson-red);
+  box-shadow: 0 0 30px rgba(255, 0, 60, 0.55), inset 0 0 15px rgba(255, 0, 60, 0.2);
+  transform: scale(1.05);
+}
+
+.badge-charging {
+  border-color: var(--bright-purple);
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(0, 100, 255, 0.4), rgba(255, 0, 60, 0.4));
+  box-shadow: 0 0 40px rgba(180, 50, 255, 0.6);
+  animation: chargingPulse 0.4s infinite alternate;
+}
+
+@keyframes chargingPulse {
+  from { transform: scale(1.02); }
+  to { transform: scale(1.08); }
+}
+
+.badge-purple {
+  border-color: var(--bright-purple);
+  color: var(--bright-purple);
+  box-shadow: 0 0 45px rgba(180, 50, 255, 0.8), inset 0 0 20px rgba(180, 50, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.badge-released {
+  border-color: #ffffff;
+  color: #ffffff;
+  background: rgba(180, 50, 255, 0.6);
+  box-shadow: 0 0 60px #ffffff, 0 0 100px var(--bright-purple);
+  transform: scale(1.15);
+}
+
+/* Hint Bar */
+.hint-bar {
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: rgba(220, 235, 255, 0.9);
+  padding: 0.4rem 1.4rem;
+  background: rgba(4, 6, 14, 0.65);
+  border-radius: 999px;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  max-width: 90vw;
+  transition: all 0.3s ease;
+}
+
+/* Top Right Toolbar */
+.hud-toolbar {
+  position: absolute;
+  top: 1.8rem;
+  right: 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  pointer-events: auto;
+}
+
+.hud-btn {
+  background: rgba(8, 14, 28, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  backdrop-filter: blur(12px);
+  transition: all 0.2s ease;
+}
+
+.hud-btn:hover {
+  background: rgba(0, 240, 255, 0.15);
+  border-color: var(--cyan-blue);
+  color: var(--cyan-blue);
+}
+
+.hud-btn.active {
+  background: rgba(0, 240, 255, 0.25);
+  border-color: var(--cyan-blue);
+  color: var(--cyan-blue);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+}
+
+.fps-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 0.5rem 0.75rem;
+  background: rgba(8, 14, 28, 0.6);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+/* Developer Diagnostics Panel */
+.debug-panel {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  width: 290px;
+  background: rgba(4, 7, 16, 0.85);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  font-family: monospace;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: #e0f0ff;
+  backdrop-filter: blur(16px);
+  pointer-events: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.debug-panel.hidden {
+  display: none;
+}
+
+.dbg-title {
+  font-weight: 800;
+  color: var(--cyan-blue);
+  border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.dbg-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dbg-hand {
+  margin-top: 0.5rem;
+  padding-top: 0.4rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
+  font-size: 0.78rem;
+}
+
+/* ===================================================================
+   ERROR / PERMISSION MODAL
+   =================================================================== */
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.modal-backdrop.hidden {
+  display: none;
+}
+
+.modal-box {
+  background: var(--panel-bg);
+  border: 1px solid var(--crimson-red);
+  border-radius: 16px;
+  padding: 2.2rem 2.5rem;
+  max-width: 480px;
+  text-align: center;
+  box-shadow: 0 0 50px rgba(255, 0, 60, 0.3);
+}
+
+.modal-icon {
+  font-size: 3rem;
+  margin-bottom: 0.8rem;
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--crimson-red);
+  margin-bottom: 0.8rem;
+}
+
+.modal-text {
+  font-size: 0.95rem;
+  color: rgba(220, 230, 250, 0.85);
+  line-height: 1.6;
+  margin-bottom: 1.6rem;
+}
+
+.modal-btn {
+  background: var(--crimson-red);
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 2rem;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.modal-btn:hover {
+  opacity: 0.85;
+}
+
+/* ===================================================================
+   RESPONSIVE LAYOUT
+   =================================================================== */
+@media (max-width: 900px) {
+  .technique-cards {
+    grid-template-columns: 1fr;
+    max-height: 48vh;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+  }
+  
+  .start-content {
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .card-desc {
+    min-height: auto;
+  }
+  
+  .main-title {
+    font-size: 2.2rem;
+  }
+  
+  .hud-top {
+    top: 1rem;
+  }
+  
+  .hud-toolbar {
+    top: 1rem;
+    right: 1rem;
+  }
+}
